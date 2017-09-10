@@ -17,7 +17,7 @@ public class Account {
     @Column(name = "c_fullname")
     private String fullName;
 
-    @Column(name = "c_phone")
+    @Column(name = "c_phonenumber")
     private String phone;
 
     public long getId() {

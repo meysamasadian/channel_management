@@ -20,15 +20,47 @@ public class Transaction {
     @Column(name = "c_date")
     private String date;
 
-    @Column(name = "c_source")
+    @Column(name = "c_part_one")
+    private String partOneRefId;
+
+    @Column(name = "c_part_two")
+    private String partTwoRefId;
+
+
+    @Column(name = "c_refid")
+    private String refId;
+
     @OneToOne
     @JoinColumn(name="c_source")
     private Account source;
 
-    @Column(name = "c_dest")
     @OneToOne
     @JoinColumn(name="c_dest")
     private Account dest;
+
+    public String getRefId() {
+        return refId;
+    }
+
+    public void setRefId(String refId) {
+        this.refId = refId;
+    }
+
+    public String getPartOneRefId() {
+        return partOneRefId;
+    }
+
+    public void setPartOneRefId(String partOneRefId) {
+        this.partOneRefId = partOneRefId;
+    }
+
+    public String getPartTwoRefId() {
+        return partTwoRefId;
+    }
+
+    public void setPartTwoRefId(String partTwoRefId) {
+        this.partTwoRefId = partTwoRefId;
+    }
 
     public long getId() {
         return id;

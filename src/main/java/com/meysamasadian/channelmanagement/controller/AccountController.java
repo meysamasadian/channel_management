@@ -2,11 +2,13 @@ package com.meysamasadian.channelmanagement.controller;
 
 import com.meysamasadian.channelmanagement.dto.AccountDto;
 import com.meysamasadian.channelmanagement.dto.TransactionDto;
+import com.meysamasadian.channelmanagement.exception.BusinessException;
 import com.meysamasadian.channelmanagement.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by rahnema on 9/6/2017.
@@ -20,27 +22,42 @@ public class AccountController {
     @RequestMapping(value = "/register", method = RequestMethod.POST )
     @ResponseBody
     public String register(@RequestBody AccountDto accountDto) {
-        accountService.register(accountDto, new BigDecimal(2000));
-        return accountDto.getFullName() + " was registered successfully!";
+        try {
+            accountService.register(accountDto);
+            return accountDto.getFullName() + " was registered successfully!";
+        } catch (BusinessException e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+
     }
 
     @RequestMapping(value = "/login/{pan}", method = RequestMethod.POST )
     @ResponseBody
     public String login(@PathVariable String pan) {
-        return accountService.login(pan);
+        try {
+            return accountService.login(pan);
+        } catch (BusinessException e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
     }
 
-    @RequestMapping(value = "/transfer/{pan}", method = RequestMethod.POST )
+    @RequestMapping(value = "/transfer/{otp}", method = RequestMethod.POST )
     @ResponseBody
-    public String transfer(@PathVariable String pan, @RequestBody TransactionDto dto) {
-        accountService.transfer(dto, pan);
-        return "money was transfer successfully!";
+    public String transfer(@PathVariable String otp, @RequestBody TransactionDto dto) {
+        try {
+            accountService.transfer(dto, otp);
+            return "money was transfer successfully!";
+        } catch (BusinessException e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
     }
 
-    @RequestMapping(value = "/reverse/{pan}", method = RequestMethod.POST )
+    @RequestMapping(value = "/list/{phone}", method = RequestMethod.GET )
     @ResponseBody
-    public String transfer(@PathVariable String pan, @RequestBody AccountDto dto) {
-        accountService.reverse(dto, pan);
-        return "money was reverse successfully!";
+    public List<TransactionDto> transfer(@PathVariable String phone) {
+        return accountService.list(phone);
     }
 }

@@ -1,7 +1,9 @@
 package com.meysamasadian.channelmanagement.service.treasury;
 
 import com.meysamasadian.channelmanagement.dto.treasury.TreasuryAccountDto;
+import com.meysamasadian.channelmanagement.dto.treasury.TreasuryDocumentContainer;
 import com.meysamasadian.channelmanagement.dto.treasury.TreasuryDocumentDto;
+import com.meysamasadian.channelmanagement.exception.BusinessException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,23 +12,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class TreasuryServiceConnectorImpl implements TreasuryServiceConnector {
     @Override
-    public String register(TreasuryAccountDto dto) {
-        return (String) ConnectionUtils.request(Path.REGISTER_ACCOUNT, null, dto);
+    public String register(TreasuryAccountDto dto) throws BusinessException {
+        return (String) ConnectionUtils.request(Path.REGISTER_ACCOUNT, String.class, null, dto);
     }
 
     @Override
-    public String login(String phoneNumber) {
-        return (String) ConnectionUtils.request(Path.LOGIN, phoneNumber, null);
+    public String login(String phoneNumber) throws BusinessException {
+        return (String) ConnectionUtils.request(Path.LOGIN, String.class, phoneNumber, null);
     }
 
     @Override
-    public String issueDocument(TreasuryDocumentDto dto, String otp) {
-        return (String) ConnectionUtils.request(Path.ISSUE_DOCUMENT, otp, dto);
+    public TreasuryDocumentContainer issueDocument(TreasuryDocumentDto dto, String otp)  {
+        return (TreasuryDocumentContainer) ConnectionUtils.transact(Path.ISSUE_DOCUMENT, TreasuryDocumentContainer.class, otp, dto);
     }
 
     @Override
-    public String reverseDocument(TreasuryAccountDto dto, String otp) {
-        return (String) ConnectionUtils.request(Path.REVERSE_DOCUMENT, otp, dto);
+    public TreasuryDocumentContainer reverseDocument(String refId) {
+        return (TreasuryDocumentContainer) ConnectionUtils.transact(Path.REVERSE_DOCUMENT, TreasuryDocumentContainer.class, refId, null);
     }
 
 }

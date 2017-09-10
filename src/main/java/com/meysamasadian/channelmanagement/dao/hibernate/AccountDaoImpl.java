@@ -18,7 +18,7 @@ public class AccountDaoImpl extends GenericDaoImpl<Account> implements AccountDa
 
     @Override
     public Account load(String pan) {
-        StringBuilder builder = new StringBuilder(" from Account acc where acc.pan = :pan");
+        StringBuilder builder = new StringBuilder(" from Account acc where acc.phone = :pan");
         Query query =  sessionFactory.getCurrentSession().createQuery(builder.toString()).setString("pan",pan);
         return (Account) query.uniqueResult();
     }

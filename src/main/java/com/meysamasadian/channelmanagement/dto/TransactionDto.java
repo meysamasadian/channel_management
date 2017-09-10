@@ -11,8 +11,8 @@ public class TransactionDto {
     private long id;
     private BigDecimal amount;
     private String date;
-    private AccountDto source;
-    private AccountDto dest;
+    private String source;
+    private String dest;
 
     public long getId() {
         return id;
@@ -38,19 +38,19 @@ public class TransactionDto {
         this.date = date;
     }
 
-    public AccountDto getSource() {
+    public String getSource() {
         return source;
     }
 
-    public void setSource(AccountDto source) {
+    public void setSource(String source) {
         this.source = source;
     }
 
-    public AccountDto getDest() {
+    public String getDest() {
         return dest;
     }
 
-    public void setDest(AccountDto dest) {
+    public void setDest(String dest) {
         this.dest = dest;
     }
 }

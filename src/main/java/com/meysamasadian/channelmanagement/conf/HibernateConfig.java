@@ -17,7 +17,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({ "com.meysamasadian.channelmanagement" })
+@ComponentScan({ "com.meysamasadian.channelmanagement.conf" })
 @PropertySource(value = { "classpath:application.properties" })
 public class HibernateConfig {
 
